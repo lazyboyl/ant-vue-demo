@@ -6,7 +6,11 @@
     :confirmLoading="confirmLoading"
     @cancel="handleCancel"
   >
-    <p>数据字典</p>
+    <a-form
+      :form="dictForm"
+      @submit="handleSubmit"
+    >
+    </a-form>
   </a-modal>
 </template>
 <script>
@@ -18,6 +22,9 @@
         default: false
       }
     },
+    beforeCreate() {
+      this.dictForm = this.$form.createForm(this);
+    },
     data() {
       return {
         show: this.value,
@@ -25,6 +32,14 @@
       }
     },
     methods: {
+      handleSubmit(e) {
+        e.preventDefault()
+        this.dictForm.validateFields((err, values) => {
+          if (!err) {
+
+          }
+        })
+      },
       handleOk(e) {
         this.confirmLoading = true;
         setTimeout(() => {
@@ -49,7 +64,7 @@
       show(val) {
         //当重新显示增加数据的时候重置整个form表单
         if (val) {
-
+          this.dictForm.resetFields();
         } else {// 反之则关闭页面
           this.closeModal(val);
         }

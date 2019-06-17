@@ -7,6 +7,23 @@
         </div>
         <div style="display:inline-block;float:right;">
           <a-input  v-model="search" placeholder="请输入相应的查询条件" style="width: auto" />
+          <a-popover
+            trigger="click"
+            v-model="visible"
+            placement="bottom"
+          >
+            <a-icon type="ellipsis" />
+            <div slot="content">
+              <div style="display: block;">
+                <a-input  v-model="dictCode" placeholder="请输入需要查询的字典编码" style="width: auto" />
+              </div>
+              <div style="margin-top: 10px;text-align:center;">
+                <a-button type="primary" @click="handleSearch">查询</a-button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a-button type="primary" @click="clearQueryDictForm">清空</a-button>
+              </div>
+            </div>
+          </a-popover>
           <a-button type="primary" @click="handleSearch">查询</a-button>
         </div>
       </div>
@@ -42,6 +59,7 @@
     data() {
       return {
         search: '',
+        dictCode : '',
         key: 'dictType',
         order: 'desc',
         dictData: [],
@@ -55,6 +73,7 @@
         },
         loading: false,
         addShow: false,
+        visible: false,
         columns: [
           {
             title: '字典类型',
@@ -78,12 +97,15 @@
           },
           {
             title: '操作',
-            scopedSlots: {customRender: 'action'},
+            scopedSlots: {customRender: 'action'}
           }
         ]
       }
     },
     methods: {
+      clearQueryDictForm(){
+        this.dictCode = '';
+      },
       addDict() {
         this.addShow = true
       },
@@ -109,7 +131,7 @@
         let search = this.search
         let orderKey = this.key
         let orderByValue = this.order
-        let dictCode = ''
+        let dictCode = this.dictCode
         const _this = this;
         queryDictList({
           current,
