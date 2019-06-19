@@ -63,6 +63,19 @@ export default [
         component: resolve => {
           require(['../views/sys/dict/dictList.vue'], resolve);
         }
+      },
+      {
+        path: 'shuttle',
+        name: 'shuttle',
+        meta: {
+          icon: 'ios-paper',
+          title: '穿梭demo',
+          code: 'system-manage-dict',
+          requireAuth: false //表示当前响应的请求是否需要进行登录拦截验证【true：需要；false：不需要】
+        },
+        component: resolve => {
+          require(['../views/sys/shuttle/shuttle.vue'], resolve);
+        }
       }
     ]
   }
