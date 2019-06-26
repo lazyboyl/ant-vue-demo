@@ -76,6 +76,32 @@ export default [
         component: resolve => {
           require(['../views/sys/shuttle/shuttle.vue'], resolve);
         }
+      },
+      {
+        path: 'upload',
+        name: 'upload',
+        meta: {
+          icon: 'ios-paper',
+          title: '图片上传的demo',
+          code: 'system-manage-dict',
+          requireAuth: false //表示当前响应的请求是否需要进行登录拦截验证【true：需要；false：不需要】
+        },
+        component: resolve => {
+          require(['../views/sys/demo/upload/upload.vue'], resolve);
+        }
+      },
+      {
+        path: 'propsList',
+        name: 'propsList',
+        meta: {
+          icon: 'ios-paper',
+          title: 'props的demo',
+          code: 'system-manage-dict',
+          requireAuth: false //表示当前响应的请求是否需要进行登录拦截验证【true：需要；false：不需要】
+        },
+        component: resolve => {
+          require(['../views/sys/demo/props/propsList.vue'], resolve);
+        }
       }
     ]
   }
