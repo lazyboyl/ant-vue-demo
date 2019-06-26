@@ -6,6 +6,7 @@
     :confirmLoading="confirmLoading"
     @cancel="handleCancel"
   >
+
   </a-modal>
 </template>
 <script>
@@ -18,13 +19,17 @@
       },
       userId: {
         type: String
+      },
+      userInfo: {
+        type: Object
       }
     },
     data() {
       return {
         show: this.value,
         confirmLoading: false,
-        userIdNow: this.userId
+        userIdNow: this.userId,
+        userInfoNow: this.userInfo
       }
     },
     methods: {
@@ -33,8 +38,10 @@
         this.show = false
       },
       handleOk(e) {
+        console.log('userIdNow改变了我要做点什么事情，' + this.userIdNow)
+        console.log(JSON.stringify(this.userInfoNow))
         // 调用父组件的方法将userrId的值变为789
-        this.$emit('changeUserId', '789');
+        this.$emit('changeUserId', {name: 'linzf', age: 12});
       },
       closeModal(val) {
         this.$emit('input', val);
@@ -45,7 +52,8 @@
       userId(val) {
         // 当userId的值发生变化的时候将当前页面的userId的值也改写
         this.userIdNow = val;
-        console.log('val---' + val)
+        console.log('做点什么事情')
+        //console.log('val---' + val)
       },
       value(val) {
         this.show = val;
