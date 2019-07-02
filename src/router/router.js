@@ -102,6 +102,19 @@ export default [
         component: resolve => {
           require(['../views/sys/demo/props/propsList.vue'], resolve);
         }
+      },
+      {
+        path: 'selectDemo',
+        name: 'selectDemo',
+        meta: {
+          icon: 'ios-paper',
+          title: '下拉框的demo',
+          code: 'system-manage-dict',
+          requireAuth: false //表示当前响应的请求是否需要进行登录拦截验证【true：需要；false：不需要】
+        },
+        component: resolve => {
+          require(['../views/sys/demo/select/selectDemo.vue'], resolve);
+        }
       }
     ]
   }
