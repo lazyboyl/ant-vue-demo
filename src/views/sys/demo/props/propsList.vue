@@ -24,7 +24,6 @@
     methods:{
       changeMyUserId(val){
         this.userId = val.name
-        this.userInfo.name = val.name
         console.log('----------' + JSON.stringify(val))
       },
       showModal(){
