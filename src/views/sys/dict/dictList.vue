@@ -31,46 +31,72 @@
       <div style="margin-top: 10px;">
         <a-table
           :rowKey="record => record.id"
-          :columns="columns"
           :dataSource="dictData"
           :pagination="pagination"
           :loading="loading"
           @change="showSizeChange"
         >
-          <template slot-scope="text, record, index" slot="dictCode">
-            <a-input
-              v-if="editIndex === index"
-              style="margin: -5px 0"
-              v-model="editDictCode"
-            />
-            <span v-else>{{ text }}</span>
-          </template>
-          <template slot-scope="text, record, index" slot="dictText">
-            <a-input
-              v-if="editIndex === index"
-              style="margin: -5px 0"
-              v-model="editDictText"
-            />
-            <span v-else>{{ text }}</span>
-          </template>
-          <template slot-scope="text, record, index" slot="dictValue">
-            <a-input
-              v-if="editIndex === index"
-              style="margin: -5px 0"
-              v-model="editDictValue"
-            />
-            <span v-else>{{ text }}</span>
-          </template>
-          <template slot="action" slot-scope="text, record, index">
+          <a-table-column
+            dataIndex="dictType"
+            key="dictType"
+          >
+            <span slot="title" style="color: #1890ff">字<br />典<br />类<br />型</span>
+          </a-table-column>
+          <a-table-column
+            dataIndex="dictCode"
+            key="dictCode"
+          >
+            <span slot="title" style="color: #1890ff">字典编码</span>
+            <template slot-scope="text, record, index">
+              <a-input
+                v-if="editIndex === index"
+                style="margin: -5px 0"
+                v-model="editDictCode"
+              />
+              <span v-else>{{ text }}</span>
+            </template>
+          </a-table-column>
+          <a-table-column
+            dataIndex="dictText"
+            key="dictText"
+          >
+            <span slot="title" style="color: #1890ff">字典文本</span>
+            <template slot-scope="text, record, index">
+              <a-input
+                v-if="editIndex === index"
+                style="margin: -5px 0"
+                v-model="editDictText"
+              />
+              <span v-else>{{ text }}</span>
+            </template>
+          </a-table-column>
+          <a-table-column
+            dataIndex="dictValue"
+            key="dictValue"
+          >
+            <span slot="title" style="color: #1890ff">字典数值</span>
+            <template slot-scope="text, record, index">
+              <a-input
+                v-if="editIndex === index"
+                style="margin: -5px 0"
+                v-model="editDictValue"
+              />
+              <span v-else>{{ text }}</span>
+            </template>
+          </a-table-column>
+          <a-table-column>
+            <span slot="title" style="color: #1890ff">操作</span>
+            <template slot-scope="text, record, index">
             <span v-if="editIndex === index">
               <a-button type="primary" size="small" @click="handleUpdate(index)">保存</a-button>
               <a-button type="primary" size="small" @click="editIndex = -1">取消</a-button>
             </span>
-            <span v-else>
+              <span v-else>
               <a-button type="primary" size="small" @click="handleEdit(record,index)">修改</a-button>
               <a-button type="danger" size="small" @click="handleDelete(record)">删除</a-button>
             </span>
-          </template>
+            </template>
+          </a-table-column>
         </a-table>
       </div>
     </a-card>
@@ -78,7 +104,7 @@
   </div>
 </template>
 <script>
-  import {queryDictList, deleteDict , updateDict} from '../../../api/sys/dict/dict.api'
+  import {queryDictList, deleteDict, updateDict} from '../../../api/sys/dict/dict.api'
   import addDict from './addDict'
 
   export default {
@@ -108,36 +134,7 @@
         editId: '',
         editDictCode: '',
         editDictText: '',
-        editDictValue: '',
-        columns: [
-          {
-            title: '字典类型',
-            dataIndex: 'dictType',
-            sorter: true
-          },
-          {
-            title: '字典编码',
-            dataIndex: 'dictCode',
-            sorter: true,
-            scopedSlots: {customRender: 'dictCode'}
-          },
-          {
-            title: '字典编码',
-            dataIndex: 'dictText',
-            sorter: true,
-            scopedSlots: {customRender: 'dictText'}
-          },
-          {
-            title: '字典数值',
-            dataIndex: 'dictValue',
-            sorter: true,
-            scopedSlots: {customRender: 'dictValue'}
-          },
-          {
-            title: '操作',
-            scopedSlots: {customRender: 'action'}
-          }
-        ]
+        editDictValue: ''
       }
     },
     methods: {
@@ -211,19 +208,8 @@
         let orderByValue = this.order
         let dictCode = this.dictCode
         const _this = this;
-        queryDictList({
-          current,
-          pageSize,
-          search,
-          orderKey,
-          orderByValue,
-          dictCode
-        }).then(res => {
-          if (res.code == 200) {
-            _this.pagination.total = res.obj.total
-            _this.dictData = res.obj.rows
-          }
-        })
+        _this.pagination.total = 10
+        _this.dictData = [{'id': 1, 'dictType': '1', 'dictCode': '1', 'dictValue': '2', 'dictText': '3'}]
       }
     },
     mounted() {
